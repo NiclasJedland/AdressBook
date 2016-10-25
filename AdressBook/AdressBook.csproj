@@ -33,7 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,14 +55,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Adressbook.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Adressbook.Designer.cs">
+      <DependentUpon>Adressbook.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmAddContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddContact.Designer.cs">
+      <DependentUpon>frmAddContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610250951288_Person.cs" />
+    <Compile Include="Migrations\201610250951288_Person.Designer.cs">
+      <DependentUpon>201610250951288_Person.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610251045530_Update.cs" />
+    <Compile Include="Migrations\201610251045530_Update.Designer.cs">
+      <DependentUpon>201610251045530_Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PersonContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Adressbook.resx">
+      <DependentUpon>Adressbook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddContact.resx">
+      <DependentUpon>frmAddContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610250951288_Person.resx">
+      <DependentUpon>201610250951288_Person.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610251045530_Update.resx">
+      <DependentUpon>201610251045530_Update.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +101,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
