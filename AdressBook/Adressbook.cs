@@ -15,7 +15,6 @@ namespace AdressBook
 	{
 		public List<Person> peopleList = new List<Person>();
 
-
 		public Adressbook()
 		{
 			InitializeComponent();
@@ -46,6 +45,7 @@ namespace AdressBook
 
 					UpdateList(true);
 				}
+				txtSearch.Text = "";
 			}
 		}
 
@@ -91,6 +91,7 @@ namespace AdressBook
 
 					UpdateList(true);
 				}
+				txtSearch.Text = "";
 			}
 		}
 
@@ -102,10 +103,7 @@ namespace AdressBook
 				UpdateList(false);
 			}
 			else
-			{
-				peopleList.Clear();
 				UpdateList(true);
-			}
 		}
 
 		private void lstPeople_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,6 +142,7 @@ namespace AdressBook
 
 			if(loadDatabase)
 			{
+				peopleList.Clear();
 				using(var db = new PersonContext())
 				{
 					var people = db.Persons.Select(s => s);
