@@ -187,6 +187,8 @@
 			this.txtPhoneNumber.Name = "txtPhoneNumber";
 			this.txtPhoneNumber.Size = new System.Drawing.Size(280, 22);
 			this.txtPhoneNumber.TabIndex = 7;
+			this.txtPhoneNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhoneNumber_KeyPress);
+
 			// 
 			// txtCity
 			// 
@@ -213,6 +215,7 @@
 			this.txtZipCode.Name = "txtZipCode";
 			this.txtZipCode.Size = new System.Drawing.Size(280, 22);
 			this.txtZipCode.TabIndex = 5;
+			this.txtZipCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtZipCode_KeyPress);
 			// 
 			// lblZipcode
 			// 

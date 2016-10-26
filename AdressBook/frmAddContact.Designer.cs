@@ -43,8 +43,8 @@
 			this.lblCity = new System.Windows.Forms.Label();
 			this.txtZipCode = new System.Windows.Forms.TextBox();
 			this.lblZipcode = new System.Windows.Forms.Label();
-			this.txtAddress = new System.Windows.Forms.TextBox();
-			this.lblAddress = new System.Windows.Forms.Label();
+			this.txtAdress = new System.Windows.Forms.TextBox();
+			this.lblAdress = new System.Windows.Forms.Label();
 			this.lblName = new System.Windows.Forms.Label();
 			this.grpInformation.SuspendLayout();
 			this.SuspendLayout();
@@ -73,8 +73,8 @@
 			this.grpInformation.Controls.Add(this.lblCity);
 			this.grpInformation.Controls.Add(this.txtZipCode);
 			this.grpInformation.Controls.Add(this.lblZipcode);
-			this.grpInformation.Controls.Add(this.txtAddress);
-			this.grpInformation.Controls.Add(this.lblAddress);
+			this.grpInformation.Controls.Add(this.txtAdress);
+			this.grpInformation.Controls.Add(this.lblAdress);
 			this.grpInformation.Controls.Add(this.lblName);
 			this.grpInformation.Location = new System.Drawing.Point(16, 15);
 			this.grpInformation.Margin = new System.Windows.Forms.Padding(4);
@@ -95,6 +95,7 @@
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			this.btnCancel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnCancel_KeyDown);
 			// 
 			// txtName
 			// 
@@ -103,6 +104,7 @@
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(280, 22);
 			this.txtName.TabIndex = 1;
+			this.txtName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtName_KeyDown);
 			// 
 			// lblBirthday
 			// 
@@ -121,6 +123,7 @@
 			this.dtpBirthday.Name = "dtpBirthday";
 			this.dtpBirthday.Size = new System.Drawing.Size(280, 22);
 			this.dtpBirthday.TabIndex = 8;
+			this.dtpBirthday.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dtpBirthday_KeyDown);
 			// 
 			// btnSave
 			// 
@@ -132,6 +135,7 @@
 			this.btnSave.Text = "Save";
 			this.btnSave.UseVisualStyleBackColor = true;
 			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			this.btnSave.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnSave_KeyDown);
 			// 
 			// txtEmail
 			// 
@@ -140,6 +144,7 @@
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.Size = new System.Drawing.Size(280, 22);
 			this.txtEmail.TabIndex = 7;
+			this.txtEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEmail_KeyDown);
 			// 
 			// lblEmail
 			// 
@@ -168,6 +173,9 @@
 			this.txtPhoneNumber.Name = "txtPhoneNumber";
 			this.txtPhoneNumber.Size = new System.Drawing.Size(280, 22);
 			this.txtPhoneNumber.TabIndex = 6;
+			this.txtPhoneNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPhoneNumber_KeyDown);
+			this.txtPhoneNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhoneNumber_KeyPress);
+
 			// 
 			// txtCity
 			// 
@@ -176,6 +184,7 @@
 			this.txtCity.Name = "txtCity";
 			this.txtCity.Size = new System.Drawing.Size(280, 22);
 			this.txtCity.TabIndex = 5;
+			this.txtCity.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCity_KeyDown);
 			// 
 			// lblCity
 			// 
@@ -194,6 +203,8 @@
 			this.txtZipCode.Name = "txtZipCode";
 			this.txtZipCode.Size = new System.Drawing.Size(280, 22);
 			this.txtZipCode.TabIndex = 4;
+			this.txtZipCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtZipCode_KeyDown);
+			this.txtZipCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtZipCode_KeyPress);
 			// 
 			// lblZipcode
 			// 
@@ -205,23 +216,24 @@
 			this.lblZipcode.TabIndex = 6;
 			this.lblZipcode.Text = "Zip code:";
 			// 
-			// txtAddress
+			// txtAdress
 			// 
-			this.txtAddress.Location = new System.Drawing.Point(147, 53);
-			this.txtAddress.Margin = new System.Windows.Forms.Padding(4);
-			this.txtAddress.Name = "txtAddress";
-			this.txtAddress.Size = new System.Drawing.Size(280, 22);
-			this.txtAddress.TabIndex = 3;
+			this.txtAdress.Location = new System.Drawing.Point(147, 53);
+			this.txtAdress.Margin = new System.Windows.Forms.Padding(4);
+			this.txtAdress.Name = "txtAdress";
+			this.txtAdress.Size = new System.Drawing.Size(280, 22);
+			this.txtAdress.TabIndex = 3;
+			this.txtAdress.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAdress_KeyDown);
 			// 
-			// lblAddress
+			// lblAdress
 			// 
-			this.lblAddress.AutoSize = true;
-			this.lblAddress.Location = new System.Drawing.Point(8, 57);
-			this.lblAddress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblAddress.Name = "lblAddress";
-			this.lblAddress.Size = new System.Drawing.Size(64, 17);
-			this.lblAddress.TabIndex = 4;
-			this.lblAddress.Text = "Address:";
+			this.lblAdress.AutoSize = true;
+			this.lblAdress.Location = new System.Drawing.Point(8, 57);
+			this.lblAdress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblAdress.Name = "lblAdress";
+			this.lblAdress.Size = new System.Drawing.Size(56, 17);
+			this.lblAdress.TabIndex = 4;
+			this.lblAdress.Text = "Adress:";
 			// 
 			// lblName
 			// 
@@ -270,8 +282,8 @@
 		private System.Windows.Forms.Label lblCity;
 		private System.Windows.Forms.TextBox txtZipCode;
 		private System.Windows.Forms.Label lblZipcode;
-		private System.Windows.Forms.TextBox txtAddress;
-		private System.Windows.Forms.Label lblAddress;
+		private System.Windows.Forms.TextBox txtAdress;
+		private System.Windows.Forms.Label lblAdress;
 		private System.Windows.Forms.Label lblName;
 	}
 }

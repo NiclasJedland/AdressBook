@@ -1,37 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdressBook
 {
 	public partial class Adressbook : Form
 	{
-		public List<Person> peopleList = new List<Person>();
-
 		public Adressbook()
 		{
 			InitializeComponent();
 		}
 
+		#region Buttons
 		private void btnRemove_Click(object sender, EventArgs e)
 		{
 			if(lstPeople.SelectedItem != null)
 			{
-				if(MessageBox.Show("Remove " + lstPeople.SelectedItem + "?", "Remove Selected", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				var test = lstPeople.SelectedItem;
+				if(MessageBox.Show("Remove Selected", "Remove " + lstPeople.SelectedItem + "?", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					Timer timer = new Timer();
 					timer.Interval = 3000;
 					timer.Enabled = true;
 					timer.Tick += new EventHandler(FadeWarningText);
 
-					var toBeRemoved = peopleList[lstPeople.SelectedIndex];
+					var toBeRemoved = lstPeople.SelectedItem;
 
 					using(var db = new PersonContext())
 					{
@@ -41,9 +37,9 @@ namespace AdressBook
 					}
 
 					lblWarning.ForeColor = Color.Red;
-					lblWarning.Text = toBeRemoved.Name + " Removed!";
+					lblWarning.Text = toBeRemoved + " Removed!";
 
-					UpdateList(true);
+					UpdateList();
 				}
 				txtSearch.Text = "";
 			}
@@ -62,7 +58,7 @@ namespace AdressBook
 		{
 			if(lstPeople.SelectedItem != null)
 			{
-				if(MessageBox.Show("Save changes?", "Update Selected", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				if(MessageBox.Show("Update " + lstPeople.SelectedItem, "Save changes?", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					using(var db = new PersonContext())
 					{
@@ -71,7 +67,7 @@ namespace AdressBook
 						timer.Enabled = true;
 						timer.Tick += new EventHandler(FadeWarningText);
 
-						var toBeUpdated = peopleList[lstPeople.SelectedIndex];
+						var toBeUpdated = (Person)lstPeople.SelectedItem;
 
 						toBeUpdated.Name = txtName.Text;
 						toBeUpdated.Adress = txtAdress.Text;
@@ -82,53 +78,37 @@ namespace AdressBook
 						toBeUpdated.Birthday = dtpBirthday.Value;
 
 						db.Entry(toBeUpdated).State = EntityState.Modified;
-						
+
 						db.SaveChanges();
 
 						lblWarning.ForeColor = Color.Green;
 						lblWarning.Text = toBeUpdated.Name + " Updated!";
 					}
 
-					UpdateList(true);
+					UpdateList();
 				}
 				txtSearch.Text = "";
 			}
 		}
-
-		private void txtSearch_TextChanged(object sender, EventArgs e)
-		{
-			if(!string.IsNullOrEmpty(txtSearch.Text))
-			{
-				Search(txtSearch.Text);
-				UpdateList(false);
-			}
-			else
-				UpdateList(true);
-		}
+		#endregion
 
 		private void lstPeople_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(lstPeople.SelectedItem != null)
 			{
-				if(lstPeople.SelectedItem != null)
-				{
-					txtName.Text = peopleList[lstPeople.SelectedIndex].Name;
-					txtAdress.Text = peopleList[lstPeople.SelectedIndex].Adress;
-					txtZipCode.Text = peopleList[lstPeople.SelectedIndex].ZipCode;
-					txtCity.Text = peopleList[lstPeople.SelectedIndex].City;
-					txtPhoneNumber.Text = peopleList[lstPeople.SelectedIndex].PhoneNumber;
-					txtEmail.Text = peopleList[lstPeople.SelectedIndex].Email;
-					dtpBirthday.Value = peopleList[lstPeople.SelectedIndex].Birthday;
-				}
+				var selectedItem = (Person)lstPeople.SelectedItem;
+
+				txtName.Text = selectedItem.Name;
+				txtAdress.Text = selectedItem.Adress;
+				txtZipCode.Text = selectedItem.ZipCode;
+				txtCity.Text = selectedItem.City;
+				txtPhoneNumber.Text = selectedItem.PhoneNumber;
+				txtEmail.Text = selectedItem.Email;
+				dtpBirthday.Value = selectedItem.Birthday;
 			}
 		}
 
-		private void Adressbook_Load(object sender, EventArgs e)
-		{
-			UpdateList(true);
-		}
-
-		void UpdateList(bool loadDatabase)
+		private void UpdateList()
 		{
 			lstPeople.Items.Clear();
 
@@ -140,44 +120,63 @@ namespace AdressBook
 			txtEmail.Text = "";
 			dtpBirthday.Value = DateTime.Today;
 
-			if(loadDatabase)
+			using(var db = new PersonContext())
 			{
-				peopleList.Clear();
-				using(var db = new PersonContext())
-				{
-					var people = db.Persons.Select(s => s);
+				var people = db.Persons.Select(s => s).OrderBy(s => s.Name);
 
-					foreach(var item in people)
-					{
-						peopleList.Add(item);
-					}
+				if(txtSearch.Text.Length > 0)
+					people = db.Persons.Select(s => s).Where(s =>
+						s.Name.ToLower().Contains(txtSearch.Text.ToLower()) ||
+						s.Adress.ToLower().Contains(txtSearch.Text.ToLower()) ||
+						s.City.ToLower().Contains(txtSearch.Text.ToLower()) ||
+						s.Email.ToLower().Contains(txtSearch.Text.ToLower())
+						).OrderBy(s => s.Name);
+
+				foreach(var item in people)
+				{
+					lstPeople.Items.Add(item);
 				}
 			}
+		}
 
-			peopleList = peopleList.OrderBy(x => x.Name).ToList();
+		private void txtSearch_TextChanged(object sender, EventArgs e)
+		{
+			UpdateList();
+		}
 
-			foreach(var person in peopleList)
-			{
-				lstPeople.Items.Add(person.ToString());
-			}
+		private void Adressbook_Load(object sender, EventArgs e)
+		{
+			UpdateList();
 		}
 
 		public void OnSavedDatabase(object source, EventArgs e)
 		{
-			UpdateList(true);
+			UpdateList();
 		}
+
 		private void FadeWarningText(object sender, EventArgs e)
 		{
 			lblWarning.Text = "";
 		}
-		public void Search(string searchString)
+
+		#region Keypress
+
+		private void txtZipCode_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			peopleList = peopleList.Where(p =>
-				p.Name.ToLower().Contains(searchString.ToLower()) ||
-				p.Adress.ToLower().Contains(searchString.ToLower()) ||
-				p.City.ToLower().Contains(searchString.ToLower()) ||
-				p.Email.ToLower().Contains(searchString.ToLower())
-				).ToList();
+			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+			{
+				e.Handled = true;
+			}
 		}
+
+		private void txtPhoneNumber_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+			{
+				e.Handled = true;
+			}
+		}
+
+		#endregion
 	}
 }

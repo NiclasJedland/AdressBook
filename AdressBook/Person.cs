@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdressBook
 {
@@ -20,7 +16,7 @@ namespace AdressBook
 		[Column(TypeName = "date")]
 		public DateTime Birthday { get; set; }
 
-		public Person() { }
+		public Person()	{ }
 
 		public Person(string name, string adress, string zipCode, string city, string phoneNumber, string email, DateTime birthday)
 		{

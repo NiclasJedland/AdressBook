@@ -18,8 +18,7 @@ namespace AdressBook
 		public event EventHandler<EventArgs> SavedDatabase;
 		protected virtual void OnSavedDatabase()
 		{
-			if(SavedDatabase != null)
-				SavedDatabase(this, EventArgs.Empty);
+			SavedDatabase?.Invoke(this, EventArgs.Empty);
 		}
 		//-------------------
 		public frmAddContact()
@@ -37,6 +36,14 @@ namespace AdressBook
 			SaveAndClose();
 		}
 
+		#region OnKeyDown
+		void CheckKeyPress(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.Enter)
+				SaveAndClose();
+			if(e.KeyCode == Keys.Escape)
+				this.Close();
+		}
 		private void txtZipCode_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -53,26 +60,22 @@ namespace AdressBook
 			}
 		}
 
-		#region OnKeyDown
-		void CheckKeyPress(object sender, KeyEventArgs e)
-		{
-			if(e.KeyCode == Keys.Enter)
-				SaveAndClose();
-			if(e.KeyCode == Keys.Escape)
-				this.Close();
-		}
-
-		private void txtFirstName_KeyDown(object sender, KeyEventArgs e)
+		private void btnSave_KeyDown(object sender, KeyEventArgs e)
 		{
 			CheckKeyPress(sender, e);
 		}
 
-		private void txtLastName_KeyDown(object sender, KeyEventArgs e)
+		private void btnCancel_KeyDown(object sender, KeyEventArgs e)
 		{
 			CheckKeyPress(sender, e);
 		}
 
-		private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+		private void txtName_KeyDown(object sender, KeyEventArgs e)
+		{
+			CheckKeyPress(sender, e);
+		}
+
+		private void txtAdress_KeyDown(object sender, KeyEventArgs e)
 		{
 			CheckKeyPress(sender, e);
 		}
@@ -101,21 +104,11 @@ namespace AdressBook
 		{
 			CheckKeyPress(sender, e);
 		}
-
-		private void btnSave_KeyDown(object sender, KeyEventArgs e)
-		{
-			CheckKeyPress(sender, e);
-		}
-
-		private void btnCancel_KeyDown(object sender, KeyEventArgs e)
-		{
-			if(e.KeyCode == Keys.Escape)
-				this.Close();
-		}
 		#endregion
+
 		private void SaveAndClose()
 		{
-			var newPerson = new Person(txtName.Text, txtAddress.Text, txtZipCode.Text, txtCity.Text, txtPhoneNumber.Text, txtEmail.Text, dtpBirthday.Value);
+			var newPerson = new Person(txtName.Text, txtAdress.Text, txtZipCode.Text, txtCity.Text, txtPhoneNumber.Text, txtEmail.Text, dtpBirthday.Value);
 
 			using(var db = new PersonContext())
 			{
