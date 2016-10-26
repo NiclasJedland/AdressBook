@@ -158,7 +158,7 @@ namespace AdressBook
 
 			foreach(var person in peopleList)
 			{
-				lstPeople.Items.Add(person.Name);
+				lstPeople.Items.Add(person.ToString());
 			}
 		}
 
