@@ -126,10 +126,10 @@ namespace AdressBook
 
 				if(txtSearch.Text.Length > 0)
 					people = db.Persons.Select(s => s).Where(s =>
-						s.Name.ToLower().Contains(txtSearch.Text.ToLower()) ||
-						s.Adress.ToLower().Contains(txtSearch.Text.ToLower()) ||
-						s.City.ToLower().Contains(txtSearch.Text.ToLower()) ||
-						s.Email.ToLower().Contains(txtSearch.Text.ToLower())
+						s.Name.ToLower().Contains(txtSearch.Text.ToLower()) 
+						|| s.Adress.ToLower().Contains(txtSearch.Text.ToLower()) 
+						|| s.City.ToLower().Contains(txtSearch.Text.ToLower()) 
+						|| s.Email.ToLower().Contains(txtSearch.Text.ToLower())
 						).OrderBy(s => s.Name);
 
 				foreach(var item in people)
@@ -138,6 +138,24 @@ namespace AdressBook
 				}
 			}
 		}
+
+		#region Keypress
+		private void txtZipCode_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+			{
+				e.Handled = true;
+			}
+		}
+
+		private void txtPhoneNumber_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+			{
+				e.Handled = true;
+			}
+		}
+		#endregion
 
 		private void txtSearch_TextChanged(object sender, EventArgs e)
 		{
@@ -158,25 +176,5 @@ namespace AdressBook
 		{
 			lblWarning.Text = "";
 		}
-
-		#region Keypress
-
-		private void txtZipCode_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-			{
-				e.Handled = true;
-			}
-		}
-
-		private void txtPhoneNumber_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			if(!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-			{
-				e.Handled = true;
-			}
-		}
-
-		#endregion
 	}
 }
