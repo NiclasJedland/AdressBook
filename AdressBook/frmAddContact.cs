@@ -112,7 +112,7 @@ namespace AdressBook
 
 			using(var db = new PersonContext())
 			{
-				db.Persons.Add(newPerson);
+				db.People.Add(newPerson);
 				db.SaveChanges();
 			}
 
